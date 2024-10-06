@@ -48,10 +48,10 @@ const userSchema = new Schema({
 }, {timestamps: true});
 
 //password save krnai sai pehlai you should encrypt it and then save
-userSchema.pre("save", async function(){
+userSchema.pre("save", async function(next){
     if(!this.isModified("password")) return next();
 
-    this.password = bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
